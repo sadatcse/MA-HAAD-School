@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colour tokens (RGB channels) — see tailwind.config.js. Light is the default; `.dark` on <html> switches
+   (dashboard and login only — the public website always stays light). */
+@layer base {
+  :root {
+    --canvas: 249 250 251;
+    --canvas-2: 243 244 246;
+    --surface: 255 255 255;
+    --surface-2: 243 244 246;
+    --ink: 10 28 61;
+    --ink-2: 31 41 55;
+    --body: 55 65 81;
+    --muted: 75 85 99;
+    --subtle: 107 114 128;
+    --faint: 156 163 175;
+    --line: 17 24 39;
+    color-scheme: light;
+  }
+
+  .dark {
+    --canvas: 0 0 0;
+    --canvas-2: 10 10 10;
+    --surface: 23 23 23;
+    --surface-2: 38 38 38;
+    --ink: 255 255 255;
+    --ink-2: 229 229 229;
+    --body: 212 212 212;
+    --muted: 163 163 163;
+    --subtle: 115 115 115;
+    --faint: 82 82 82;
+    --line: 255 255 255;
+    color-scheme: dark;
+  }
+
+  /* Slightly larger type on big monitors so wide layouts don't feel tiny */
+  @media (min-width: 1920px) {
+    html { font-size: 17px; }
+  }
+
+  @keyframes nav-progress {
+    from { width: 0; }
+    to { width: 90%; }
+  }
+
+  body {
+    @apply bg-canvas font-sans text-body antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-ink;
+  }
+}
+
+@layer components {
+  /* Long-form text blocks (about, messages, rules, notices) */
+  .prose-school {
+    @apply text-[15px] leading-[1.85] text-slate-600 md:text-base;
+  }
+  .prose-school > * + * {
+    @apply mt-4;
+  }
+  .prose-school h2 {
+    @apply mt-8 font-display text-2xl text-navy-900;
+  }
+  .prose-school h3 {
+    @apply mt-6 font-display text-xl text-navy-900;
+  }
+  .prose-school ul {
+    @apply space-y-2 pl-0;
+  }
+  .prose-school ul > li {
+    @apply relative pl-6;
+  }
+  .prose-school ul > li::before {
+    content: '';
+    @apply absolute left-1 top-[0.7em] h-2 w-2 rounded-full bg-gold-500;
+  }
+  .prose-school ol {
+    @apply list-decimal space-y-2 pl-6 marker:font-semibold marker:text-brand-600;
+  }
+  .prose-school strong {
+    @apply font-semibold text-navy-900;
+  }
+  .prose-school a {
+    @apply font-medium text-brand-600 underline-offset-2 hover:underline;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+}
+
+/* Notice bar: scroll stops on hover/focus; no animation for people who prefer reduced motion */
+.marquee-track:hover,
+.marquee-track:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none !important; }
+}

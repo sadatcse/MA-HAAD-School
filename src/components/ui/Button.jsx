@@ -1,0 +1,39 @@
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
+
+const VARIANTS = {
+  primary: 'bg-primary-600 text-white hover:bg-primary-700',
+  secondary: 'border border-line/20 bg-surface text-body hover:bg-line/5',
+  danger: 'bg-red-600 text-white hover:bg-red-700',
+  ghost: 'text-muted hover:bg-line/10',
+  // Brand gradient (public pages)
+  brand: 'bg-gradient-to-r from-navy-900 to-brand-600 text-white shadow-lg shadow-brand-600/20 hover:opacity-90',
+};
+
+const SIZES = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2 text-sm',
+  lg: 'px-6 py-3 text-base',
+};
+
+// <Button href="/contact">…</Button> renders a link; without href it's a <button>.
+export default function Button({ href, variant = 'primary', size = 'md', className, children, ...props }) {
+  const classes = cn(
+    'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60',
+    VARIANTS[variant],
+    SIZES[size],
+    className
+  );
+  if (href) {
+    return (
+      <Link href={href} className={classes} {...props}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" className={classes} {...props}>
+      {children}
+    </button>
+  );
+}
